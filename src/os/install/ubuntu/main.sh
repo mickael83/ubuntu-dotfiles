@@ -50,6 +50,41 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    if ! package_is_installed "spotify-client"; then
+
+        add_key_by_param "keyserver.ubuntu.com" "D2C19886"  \
+            || print_error "Spotify (add key)"
+
+        add_to_source_list "deb http://repository.spotify.com stable non-free" "spotify.list" \
+            || print_error "Spotify (add to package resource list)"
+
+        update &> /dev/null \
+            || print_error "Spotify (resync package index files)"
+
+    fi
+
+    install_package "Spotify" "spotify-client"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    if ! package_is_installed "sky"; then
+
+        add_key_by_param "keyserver.ubuntu.com" "9454C19A66B920C83DDF696E07C8CCAFCE49F8C5"  \
+            || print_error "Sky (add key)"
+
+        add_to_source_list "deb https://tel.red/repos/ubuntu yakkety non-free" "telred.list" \
+            || print_error "Sky (add to package resource list)"
+
+        update &> /dev/null \
+            || print_error "Sky (resync package index files)"
+
+    fi
+
+    install_package "Sky (Skype for business)" "sky"
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     install_package "cURL" "curl"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

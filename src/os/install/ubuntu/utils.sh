@@ -13,6 +13,11 @@ add_key() {
 
 }
 
+add_key_by_param() {
+    sudo apt-key adv --keyserver $1 --recv-keys $2
+}
+
+
 add_ppa() {
     sudo add-apt-repository -y ppa:"$1" &> /dev/null
 }
