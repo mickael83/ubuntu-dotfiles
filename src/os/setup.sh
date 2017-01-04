@@ -148,7 +148,6 @@ extract() {
 
 verify_os() {
 
-    declare -r MINIMUM_MACOS_VERSION="10.10"
     declare -r MINIMUM_UBUNTU_VERSION="14.04"
 
     local os_name=""
@@ -163,13 +162,6 @@ verify_os() {
 
     if [ "$os_name" == "Darwin" ]; then
         printf "Sorry, this script is intended only for Ubuntu!"
-        #os_version="$(sw_vers -productVersion)"
-
-        #if is_supported_version "$os_version" "$MINIMUM_MACOS_VERSION"; then
-        #    return 0
-        #else
-        #    printf "Sorry, this script is intended only for macOS %s+" "$MINIMUM_MACOS_VERSION"
-        #fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
