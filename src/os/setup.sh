@@ -162,14 +162,14 @@ verify_os() {
     os_name="$(uname -s)"
 
     if [ "$os_name" == "Darwin" ]; then
+        printf "Sorry, this script is intended only for Ubuntu!"
+        #os_version="$(sw_vers -productVersion)"
 
-        os_version="$(sw_vers -productVersion)"
-
-        if is_supported_version "$os_version" "$MINIMUM_MACOS_VERSION"; then
-            return 0
-        else
-            printf "Sorry, this script is intended only for macOS %s+" "$MINIMUM_MACOS_VERSION"
-        fi
+        #if is_supported_version "$os_version" "$MINIMUM_MACOS_VERSION"; then
+        #    return 0
+        #else
+        #    printf "Sorry, this script is intended only for macOS %s+" "$MINIMUM_MACOS_VERSION"
+        #fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -189,7 +189,7 @@ verify_os() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     else
-        printf "Sorry, this script is intended only for macOS and Ubuntu!"
+        printf "Sorry, this script is intended only for Ubuntu!"
     fi
 
     return 1
