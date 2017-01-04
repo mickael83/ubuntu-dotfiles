@@ -82,6 +82,39 @@ install_apps() {
 
     install_package "Sky (Skype for business)" "sky"
 
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    if ! package_is_installed "skypeforlinux"; then
+
+        add_key "https://repo.skype.com/data/SKYPE-GPG-KEY" \
+            || print_error "Skype for linux (add key)"
+
+        add_to_source_list "deb [arch=amd64] https://repo.skype.com/deb stable main" "skypeforlinux.list" \
+            || print_error "Skype for linux (add to package resource list)"
+
+        update &> /dev/null \
+            || print_error "Skype for linux (resync package index files)"
+
+    fi
+
+    install_package "Skype for linux" "skypeforlinux"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    if ! package_is_installed "code"; then
+
+        add_key "https://tagplus5.github.io/vscode-ppa/ubuntu/gpg.key" \
+            || print_error "Visual Studio Code (add key)"
+
+        add_to_source_list "deb https://tagplus5.github.io/vscode-ppa/ubuntu ./" "vscode.list" \
+            || print_error "Visual Studio Code (add to package resource list)"
+
+        update &> /dev/null \
+            || print_error "Visual Studio Code (resync package index files)"
+
+    fi
+
+    install_package "Visual Studio Code" "code"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
