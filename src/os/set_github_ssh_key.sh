@@ -112,11 +112,11 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    ssh -T git@github.com &> /dev/null
+    #ssh -T git@github.com &> /dev/null
 
-    if [ $? -ne 1 ]; then
-        set_github_ssh_key
-    fi
+    #if [ $? -ne 1 ]; then
+    #    set_github_ssh_key
+    #fi
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
