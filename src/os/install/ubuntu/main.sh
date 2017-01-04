@@ -33,6 +33,14 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    install_package "APT Transport HTTPS" "apt-transport-https"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    install_package "CA certificates" "ca-certificates"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     if ! package_is_installed "google-chrome-stable"; then
 
         add_key "https://dl-ssl.google.com/linux/linux_signing_key.pub" \
@@ -118,6 +126,10 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    install_from_remote_deb "Apache Directory Studio" "http://mirrors.fe.up.pt/pub/apache//directory/apacheds/dist/2.0.0-M23/apacheds-2.0.0-M23-amd64.deb"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     install_package "cURL" "curl"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -181,7 +193,48 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    if ! package_is_installed "virtualbox"; then
+
+        add_key "http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc" \
+            || print_error "Virtual box (add key)"
+
+        add_to_source_list "deb http://download.virtualbox.org/virtualbox/debian yakkety non-free contrib" "virtualbox.org.list" \
+            || print_error "Virtual box (add to package resource list)"
+
+        update &> /dev/null \
+            || print_error "Virtual box (resync package index files)"
+
+    fi
+
+    install_package "Virtual box" "virtualbox"
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     install_package "Zopfli" "zopfli"
+
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    install_package "Evolution mail" "evolution"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    install_package "Evolution EWS Plugin" "evolution-ews"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    install_package "Evolution RSS Plugin" "evolution-rss"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    install_package "MySQL Workbench" "mysql-workbench"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    sudo rm -rf /opt/robomongo && sudo mkdir -p /opt/robomongo && cd /opt/robomongo
+    sudo curl -L 'https://download.robomongo.org/0.9.0/linux/robomongo-0.9.0-linux-x86_64-0786489.tar.gz' | tar -xz  --strip-components=1
+    sudo ln -s /opt/robomongo/bin/robomongo /usr/bin/robomongo
 
 }
 
