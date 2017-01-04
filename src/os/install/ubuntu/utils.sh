@@ -55,7 +55,7 @@ install_package() {
 install_from_remote_deb() {
     declare -r URL="$2"
     declare -r PACKAGE_READABLE_NAME="$1"
-    FILE=$(mktemp); wget "$URL" -qO $FILE && sudo dpkg -i $FILE; rm $FILE
+    FILE=$(mktemp); wget "$URL" -qO "$FILE" && sudo dpkg -i "$FILE"; rm "$FILE"
     print_success "$PACKAGE_READABLE_NAME"
 }
 
