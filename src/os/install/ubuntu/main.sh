@@ -63,7 +63,7 @@ install_apps() {
         add_key_by_param "keyserver.ubuntu.com" "D2C19886"  \
             || print_error "Spotify (add key)"
 
-        add_to_source_list "deb http://repository.spotify.com stable non-free" "spotify.list" \
+        add_to_source_list "http://repository.spotify.com stable non-free" "spotify.list" \
             || print_error "Spotify (add to package resource list)"
 
         update &> /dev/null \
@@ -80,7 +80,7 @@ install_apps() {
         add_key_by_param "keyserver.ubuntu.com" "9454C19A66B920C83DDF696E07C8CCAFCE49F8C5"  \
             || print_error "Sky (add key)"
 
-        add_to_source_list "deb https://tel.red/repos/ubuntu yakkety non-free" "telred.list" \
+        add_to_source_list "https://tel.red/repos/ubuntu yakkety non-free" "telred.list" \
             || print_error "Sky (add to package resource list)"
 
         update &> /dev/null \
@@ -97,7 +97,7 @@ install_apps() {
         add_key_by_param "keyserver.ubuntu.com" "ACCAF35C"  \
             || print_error "InSync for Google Drive (add key)"
 
-        add_to_source_list "deb http://apt.insynchq.com/ubuntu yakkety non-free contrib" "insync.list" \
+        add_to_source_list "http://apt.insynchq.com/ubuntu yakkety non-free contrib" "insync.list" \
             || print_error "InSync for Google Drive (add to package resource list)"
 
         update &> /dev/null \
@@ -114,7 +114,7 @@ install_apps() {
         add_key "https://repo.skype.com/data/SKYPE-GPG-KEY" \
             || print_error "Skype for linux (add key)"
 
-        add_to_source_list "deb [arch=amd64] https://repo.skype.com/deb stable main" "skypeforlinux.list" \
+        add_to_source_list "[arch=amd64] https://repo.skype.com/deb stable main" "skypeforlinux.list" \
             || print_error "Skype for linux (add to package resource list)"
 
         update &> /dev/null \
@@ -131,7 +131,7 @@ install_apps() {
         add_key "https://tagplus5.github.io/vscode-ppa/ubuntu/gpg.key" \
             || print_error "Visual Studio Code (add key)"
 
-        add_to_source_list "deb https://tagplus5.github.io/vscode-ppa/ubuntu ./" "vscode.list" \
+        add_to_source_list "https://tagplus5.github.io/vscode-ppa/ubuntu ./" "vscode.list" \
             || print_error "Visual Studio Code (add to package resource list)"
 
         update &> /dev/null \
@@ -225,7 +225,7 @@ install_apps() {
         add_key "http://download.virtualbox.org/virtualbox/debian/oracle_vbox_2016.asc" \
             || print_error "Virtual box (add key)"
 
-        add_to_source_list "deb http://download.virtualbox.org/virtualbox/debian yakkety non-free contrib" "virtualbox.org.list" \
+        add_to_source_list "http://download.virtualbox.org/virtualbox/debian yakkety non-free contrib" "virtualbox.org.list" \
             || print_error "Virtual box (add to package resource list)"
 
         update &> /dev/null \
