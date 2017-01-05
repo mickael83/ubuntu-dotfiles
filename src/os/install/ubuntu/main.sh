@@ -285,13 +285,20 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    sudo rm -rf /opt/robomongo && sudo mkdir -p /opt/robomongo && cd /opt/robomongo
-    sudo curl -L 'https://download.robomongo.org/0.9.0/linux/robomongo-0.9.0-linux-x86_64-0786489.tar.gz' | sudo tar -xz  --strip-components=1
-    sudo rm -rf /opt/robomongo/bin/robomongo /usr/bin/robomongo
-    sudo ln -s /opt/robomongo/bin/robomongo /usr/bin/robomongo
-    print_success "Robomongo"
-
+    install_robomongo "https://download.robomongo.org/0.9.0/linux/robomongo-0.9.0-linux-x86_64-0786489.tar.gz"
 }
+
+install_robomongo() {
+    declare -r TAR_GZ_URL="$1"
+
+    execute \
+        "sudo rm -rf /opt/robomongo && sudo mkdir -p /opt/robomongo && cd /opt/robomongo \
+            && sudo curl -L \"$TAR_GZ_URL\" | sudo tar -xz  --strip-components=1 \
+            && sudo rm -rf /opt/robomongo/bin/robomongo /usr/bin/robomongo \
+            && sudo ln -s /opt/robomongo/bin/robomongo /usr/bin/robomongo" \
+        "Robomongo"
+}
+
 
 main() {
 
