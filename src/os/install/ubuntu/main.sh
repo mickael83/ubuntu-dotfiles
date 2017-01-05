@@ -92,6 +92,23 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    if ! package_is_installed "insync"; then
+
+        add_key_by_param "keyserver.ubuntu.com" "ACCAF35C"  \
+            || print_error "InSync for Google Drive (add key)"
+
+        add_to_source_list "deb http://apt.insynchq.com/ubuntu yakkety non-free contrib" "insync.list" \
+            || print_error "InSync for Google Drive (add to package resource list)"
+
+        update &> /dev/null \
+            || print_error "InSync for Google Drive (resync package index files)"
+
+    fi
+
+    install_package "InSync for Google Drive" "insync"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     if ! package_is_installed "skypeforlinux"; then
 
         add_key "https://repo.skype.com/data/SKYPE-GPG-KEY" \
@@ -127,6 +144,10 @@ install_apps() {
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     install_from_remote_deb "Apache Directory Studio" "http://mirrors.fe.up.pt/pub/apache//directory/apacheds/dist/2.0.0-M23/apacheds-2.0.0-M23-amd64.deb"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    install_from_remote_deb "Facebook Messenger" "https://github.com/Aluxian/Facebook-Messenger-Desktop/releases/download/v1.4.3/Messenger_linux64.deb"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
