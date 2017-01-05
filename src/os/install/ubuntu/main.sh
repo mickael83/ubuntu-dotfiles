@@ -118,7 +118,7 @@ install_apps() {
         add_key "https://repo.skype.com/data/SKYPE-GPG-KEY" \
             || print_error "Skype for linux (add key)"
 
-        add_to_source_list "[arch=amd64] https://repo.skype.com/deb stable main" "skypeforlinux.list" \
+        add_to_source_list "[arch=amd64] https://repo.skype.com/deb stable main" "skype-stable.list" \
             || print_error "Skype for linux (add to package resource list)"
 
         update &> /dev/null \
@@ -151,7 +151,7 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    install_from_remote_deb "Facebook Messenger" "https://github.com/Aluxian/Facebook-Messenger-Desktop/releases/download/v1.4.3/Messenger_linux64.deb"
+    install_from_remote_deb "Facebook Messenger" "https://github.com/Aluxian/Messenger-for-Desktop/releases/download/v2.0.4/messengerfordesktop-2.0.4-linux-amd64.deb"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -251,7 +251,7 @@ install_apps() {
         add_key_by_param "hkp://ha.pool.sks-keyservers.net:80" "58118E89F3A912897C070ADBF76221572C52609D"  \
             || print_error "Docker (add key)"
 
-        add_to_source_list "https://apt.dockerproject.org/repo ubuntu-yakkety main" "docker.list" \
+        add_to_source_list "https://apt.dockerproject.org/repo ubuntu-xenial main" "docker.list" \
             || print_error "Docker (add to package resource list)"
 
         update &> /dev/null \
