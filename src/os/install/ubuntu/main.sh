@@ -276,7 +276,7 @@ main() {
     print_in_purple "   Miscellaneous\n\n"
 
     update
-    upgrade
+    #upgrade
     printf "\n"
     install_apps
     printf "\n"
