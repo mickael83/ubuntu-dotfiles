@@ -33,6 +33,10 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    install_package "Telnet" "telnet"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     install_package "APT Transport HTTPS" "apt-transport-https"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
