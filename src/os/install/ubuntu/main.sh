@@ -25,8 +25,6 @@ install_apps() {
 
     #install_package "Ubuntu Restricted Extras" "ubuntu-restricted-extras"
 
-    printf "\n"
-
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
     install_package "Brotli" "brotli"
