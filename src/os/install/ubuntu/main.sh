@@ -237,7 +237,28 @@ install_apps() {
 
     fi
 
-    install_package "Virtual box" "virtualbox"
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    if ! package_is_installed "docker-engine"; then
+
+        install_package "Linux image extra" "linux-image-extra-$(uname -r)"
+
+        install_package "Linux image extra virtual" "linux-image-extra-virtual"
+
+        sudo curl -L "https://github.com/docker/compose/releases/download/1.9.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+        sudo chmod +x /usr/local/bin/docker-compose
+
+        add_key_by_param "hkp://ha.pool.sks-keyservers.net:80" "58118E89F3A912897C070ADBF76221572C52609D"  \
+            || print_error "Docker (add key)"
+
+        add_to_source_list "https://apt.dockerproject.org/repo ubuntu-yakkety main" "docker.list" \
+            || print_error "Docker (add to package resource list)"
+
+        update &> /dev/null \
+            || print_error "Docker (resync package index files)"
+
+    fi
+    install_package "Docker" "docker-engine"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -268,6 +289,7 @@ install_apps() {
     sudo curl -L 'https://download.robomongo.org/0.9.0/linux/robomongo-0.9.0-linux-x86_64-0786489.tar.gz' | sudo tar -xz  --strip-components=1
     sudo rm -rf /opt/robomongo/bin/robomongo /usr/bin/robomongo
     sudo ln -s /opt/robomongo/bin/robomongo /usr/bin/robomongo
+    print_success "Robomongo"
 
 }
 
