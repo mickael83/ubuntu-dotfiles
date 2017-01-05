@@ -32,7 +32,7 @@ autoremove() {
     # dependencies for other packages and are no longer needed.
 
     execute \
-        "sudo apt-get autoremove -qqy" \
+        "sudo apt-get autoremove -fqqy" \
         "APT (autoremove)"
 
 }
@@ -55,8 +55,8 @@ install_package() {
 install_from_remote_deb() {
     declare -r URL="$2"
     declare -r PACKAGE_READABLE_NAME="$1"
-    execute "FILE=$(mktemp); wget \"$URL\" -qO \"$FILE\" && sudo dpkg -i \"$FILE\"; rm \"$FILE\"" "$PACKAGE_READABLE_NAME"
-    #print_success "$PACKAGE_READABLE_NAME"
+    declare -r FILE="$(mktemp)"
+    execute "wget \"$URL\" -qO \"$FILE\" && sudo dpkg -i \"$FILE\"; rm \"$FILE\"" "$PACKAGE_READABLE_NAME"
 }
 
 package_is_installed() {
