@@ -151,6 +151,10 @@ install_apps() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    install_from_remote_deb "Google Music Player" "https://github.com/MarshallOfSound/Google-Play-Music-Desktop-Player-UNOFFICIAL-/releases/download/v4.0.5/google-play-music-desktop-player_4.0.5_amd64.deb"
+
+    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
     install_package "cURL" "curl"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -174,6 +178,8 @@ install_apps() {
     install_package "ImageMagick" "imagemagick"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+    install_package "GParted" "gparted"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
