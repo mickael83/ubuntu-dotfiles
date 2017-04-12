@@ -93,8 +93,8 @@ secure_mysql() {
 }
 
 install_databases() {
-    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" > /etc/apt/sources.list.d/mysql.list
-    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools" >> /etc/apt/sources.list.d/mysql.list
+    sudo echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" > /etc/apt/sources.list.d/mysql.list
+    sudo echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools" >> /etc/apt/sources.list.d/mysql.list
     update
 
     echo "mysql-server-5.6 mysql-server/root_password password root" | sudo debconf-set-selections
