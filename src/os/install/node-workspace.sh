@@ -27,7 +27,7 @@ install_nvm() {
 
 install_npm_package() {
     execute \
-        "source ~/.bashrc &&  && npm install --global --silent $2" \
+        "source ~/.bashrc && npm install --global --silent $2" \
         "$1"
 }
 
