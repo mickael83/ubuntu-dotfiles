@@ -28,20 +28,23 @@ main() {
 
     printf "\n"
 
-    install_npm_package "JSHint" "jshint"
-    #install_npm_package "JSLint" "jslint"
-    install_npm_package "CSSLint" "csslint"
-    install_npm_package "TSLint" "tslint"
-    install_npm_package "PHPLint" "phplint"
-
-    install_npm_package "Gulp" "gulp"
-    install_npm_package "Bower" "bower"
-
-    #install_npm_package "Ionic" "ionic"
-    #install_npm_package "Cordova" "cordova"
-
-
-
+    install_npm_package "cordova" "cordova"
+    install_npm_package "ionic" "ionic"
+    install_npm_package "gulp" "gulp"
+    install_npm_package "bower" "bower"
+    install_npm_package "yo" "yo"
+    install_npm_package "typescript" "typescript"
+    install_npm_package "tslint" "tslint"
+    install_npm_package "csslint" "csslint"
+    install_npm_package "node-sass" "node-sass"
+    install_npm_package "scss-lint" "scss-lint"
+    install_npm_package "phplint" "phplint"
+    install_npm_package "jshint" "jshint"
+    install_npm_package "jscs" "jscs"
+    install_npm_package "json-server" "json-server"
+    install_npm_package "http-server" "http-server"
+    install_npm_package "generator-angular2-library" "generator-angular2-library"
+    install_npm_package "@angular/cli@latest" "@angular/cli@latest"
 }
 
 main

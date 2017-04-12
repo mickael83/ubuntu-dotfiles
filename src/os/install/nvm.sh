@@ -8,8 +8,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 install_stable_node() {
 
     execute \
-        ". $LOCAL_SHELL_CONFIG_FILE \
-            && nvm install v6.9.5" \
+        "nvm install v6.9.5" \
         "node 6.9.5"
 }
 
