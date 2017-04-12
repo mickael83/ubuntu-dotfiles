@@ -6,7 +6,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_apps() {
+install_misc_tools() {
 
     # Install tools for compiling/building software from source.
 
@@ -55,15 +55,39 @@ install_apps() {
 
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+install_web_servers() {
+    install_package "NGINX" "nginx"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+install_databases() {
+    # install_package "MySQL" "mysql"
+    # install_package "MongoDB" "mongodb"
+}
+
 main() {
 
     print_in_purple "   Miscellaneous\n\n"
-
     update
     #upgrade
     printf "\n"
-    install_apps
+    install_misc_tools
     printf "\n"
+
+    print_in_purple "   Web servers\n\n"
+    printf "\n"
+    install_web_servers
+    printf "\n"
+
+    print_in_purple "   Databases\n\n"
+    printf "\n"
+    install_databases
+    printf "\n"
+
+
     autoremove
 
 }

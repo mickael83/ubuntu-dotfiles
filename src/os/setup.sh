@@ -275,9 +275,9 @@ main() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-    if ! $skipQuestions; then
-        ./restart.sh
-    fi
+    #if ! $skipQuestions; then
+    #    ./restart.sh
+    #fi
 
 }
 
