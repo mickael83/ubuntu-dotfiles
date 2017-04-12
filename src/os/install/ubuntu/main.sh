@@ -93,8 +93,14 @@ secure_mysql() {
 }
 
 install_databases() {
+    URL='https://dev.mysql.com/get/mysql-apt-config_0.8.4-1_all.deb'; FILE=`mktemp`; wget "$URL" -qO $FILE && sudo dpkg -i $FILE; rm $FILE
+    update
+
+    echo "mysql-server-5.6 mysql-server/root_password password root" | sudo debconf-set-selections
+    echo "mysql-server-5.6 mysql-server/root_password_again password root" | sudo debconf-set-selections
     install_package "MySQL" "mysql-server"
     execute "secure_mysql" "Secure MySQL"
+
     install_package "MongoDB" "mongodb"
 }
 
