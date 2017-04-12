@@ -1,10 +1,11 @@
 #!/bin/bash
 
 declare -r GITHUB_REPOSITORY="mickael83/ubuntu-dotfiles"
+declare -r REPOSITORY_BRANCH="bash-on-windows"
 
 #declare -r DOTFILES_ORIGIN="git@github.com:$GITHUB_REPOSITORY.git"
-declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/master"
-declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/master/src/os/utils.sh"
+declare -r DOTFILES_TARBALL_URL="https://github.com/$GITHUB_REPOSITORY/tarball/$REPOSITORY_BRANCH"
+declare -r DOTFILES_UTILS_URL="https://raw.githubusercontent.com/$GITHUB_REPOSITORY/$REPOSITORY_BRANCH/src/os/utils.sh"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
