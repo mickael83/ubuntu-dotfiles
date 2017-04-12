@@ -5,29 +5,45 @@ cd "$(dirname "${BASH_SOURCE[0]}")" \
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-install_npm_package() {
+install_stable_node() {
 
     execute \
-        ". $HOME/.bash.local \
-            && npm install --global --silent $2" \
-        "$1"
-
+        "source ~/.bashrc && nvm install v6.9.5" \
+        "node 6.9.5"
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+install_nvm() {
+
+    # Install `nvm` and add the necessary
+    # configs in the local shell config file.
+    execute \
+        "curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash" \
+        "nvm"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+install_npm_package() {
+    execute \
+        "npm install --global --silent $2" \
+        "$1"
+}
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
 main() {
 
-    print_in_purple "\n   npm\n\n"
+    print_in_purple "\n   Node workspace\n\n"
 
-    # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+    install_nvm
+    install_stable_node
     install_npm_package "npm (update)" "npm"
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
     printf "\n"
-
     install_npm_package "cordova" "cordova"
     install_npm_package "ionic" "ionic"
     install_npm_package "gulp" "gulp"
