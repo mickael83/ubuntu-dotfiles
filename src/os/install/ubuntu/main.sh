@@ -64,7 +64,7 @@ install_web_servers() {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 secure_mysql() {
-    aptitude -y install expect
+    sudo apt-get -y install expect
 
     // Not required in actual script
     MYSQL_ROOT_PASSWORD=r00t
@@ -88,11 +88,15 @@ secure_mysql() {
     ")
 
     echo "$SECURE_MYSQL"
-
-    aptitude -y purge expect
+    execute "mysql_secure_installation" "Secure MySQL"
+    sudo apt-get -y purge expect
 }
 
 install_databases() {
+    # Mongo
+    install_package "MongoDB" "mongodb"
+
+    # MySQL
     echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | sudo tee /etc/apt/sources.list.d/mysql.list > /dev/null
     echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools" | sudo tee --append /etc/apt/sources.list.d/mysql.list > /dev/null
     update
@@ -100,13 +104,11 @@ install_databases() {
     echo "mysql-server mysql-server/root_password password root" | sudo debconf-set-selections
     echo "mysql-server mysql-server/root_password_again password root" | sudo debconf-set-selections
     install_package "MySQL" "mysql-server"
+    secure_mysql
 
-    # Run the MySQL Secure Installation wizard
-    execute "mysql_secure_installation" "Secure MySQL"
     sudo sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
     mysql -uroot -p -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
 
-    install_package "MongoDB" "mongodb"
 }
 
 main() {
