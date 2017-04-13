@@ -63,33 +63,62 @@ install_web_servers() {
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-secure_mysql() {
-    sudo apt-get -y install expect
+install_mysql() {
 
-    // Not required in actual script
-    MYSQL_ROOT_PASSWORD=r00t
+    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | sudo tee /etc/apt/sources.list.d/mysql.list > /dev/null
+    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools" | sudo tee --append /etc/apt/sources.list.d/mysql.list > /dev/null
+    update
 
-    SECURE_MYSQL=$(expect -c "
-    set timeout 10
-    spawn mysql_secure_installation
-    expect \"Enter current password for root (enter for none):\"
-    send \"$MYSQL\r\"
-    expect \"Change the root password?\"
-    send \"n\r\"
-    expect \"Remove anonymous users?\"
-    send \"y\r\"
-    expect \"Disallow root login remotely?\"
-    send \"y\r\"
-    expect \"Remove test database and access to it?\"
-    send \"y\r\"
-    expect \"Reload privilege tables now?\"
-    send \"y\r\"
-    expect eof
-    ")
+    MYSQL_ROOT_PASSWORD="r00t"
+    echo debconf mysql-server/root_password password $MYSQL_ROOT_PASSWORD | sudo debconf-set-selections
+    echo debconf mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD | sudo debconf-set-selections
+    install_package "MySQL" "mysql-server"
+    sudo usermod -d /var/lib/mysql/ mysql
 
-    echo "$SECURE_MYSQL"
-    execute "mysql_secure_installation" "Secure MySQL"
-    sudo apt-get -y purge expect
+    sudo sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
+    # mysql -uroot -p -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
+
+    # Install Expect
+    sudo apt-get -qq install expect > /dev/null
+
+    # Build Expect script
+    tee ~/secure_our_mysql.sh > /dev/null << EOF
+spawn $(which mysql_secure_installation)
+
+expect "Enter password for user root:"
+send "$MYSQL_ROOT_PASSWORD\r"
+
+expect "Press y|Y for Yes, any other key for No:"
+send "y\r"
+
+expect "Please enter 0 = LOW, 1 = MEDIUM and 2 = STRONG:"
+send "2\r"
+
+expect "Change the password for root ? ((Press y|Y for Yes, any other key for No) :"
+send "n\r"
+
+expect "Remove anonymous users? (Press y|Y for Yes, any other key for No) :"
+send "y\r"
+
+expect "Disallow root login remotely? (Press y|Y for Yes, any other key for No) :"
+send "y\r"
+
+expect "Remove test database and access to it? (Press y|Y for Yes, any other key for No) :"
+send "y\r"
+
+expect "Reload privilege tables now? (Press y|Y for Yes, any other key for No) :"
+send "y\r"
+
+EOF
+
+    # Run Expect script.
+    # This runs the "mysql_secure_installation" script which removes insecure defaults.
+    sudo expect ~/secure_our_mysql.sh
+
+    # Cleanup
+    rm -v ~/secure_our_mysql.sh # Remove the generated Expect script
+    sudo apt-get -qq purge expect > /dev/null # Uninstall Expect, commented out in case you need Expect
+
 }
 
 install_databases() {
@@ -97,18 +126,7 @@ install_databases() {
     install_package "MongoDB" "mongodb"
 
     # MySQL
-    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | sudo tee /etc/apt/sources.list.d/mysql.list > /dev/null
-    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools" | sudo tee --append /etc/apt/sources.list.d/mysql.list > /dev/null
-    update
-
-    echo "mysql-server mysql-server/root_password password root" | sudo debconf-set-selections
-    echo "mysql-server mysql-server/root_password_again password root" | sudo debconf-set-selections
-    install_package "MySQL" "mysql-server"
-    secure_mysql
-
-    sudo sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
-    mysql -uroot -p -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
-
+    install_mysql
 }
 
 main() {
