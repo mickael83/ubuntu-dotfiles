@@ -76,7 +76,7 @@ install_mysql() {
         "MySQL apt repository"
     # update
 
-    MYSQL_ROOT_PASSWORD="secret"
+    MYSQL_ROOT_PASSWORD="r00t"
     sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/data-dir select ''"
     sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password $MYSQL_ROOT_PASSWORD"
     sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password $MYSQL_ROOT_PASSWORD"
