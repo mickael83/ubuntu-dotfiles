@@ -14,7 +14,7 @@ understand [what it does](src/os/setup.sh). Seriously, **DON'T**!)
 
 | OS | Snippet |
 |:---|:---|
-| `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/mickael83/ubuntu-dotfiles/master/src/os/setup.sh)"` |
+| `Ubuntu` | `bash -c "$(wget -qO - https://raw.github.com/mickael83/ubuntu-dotfiles/bash-on-windows/src/os/setup.sh)"` |
 
 That's it! :sparkles:
 

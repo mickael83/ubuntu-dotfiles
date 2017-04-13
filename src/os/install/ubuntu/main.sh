@@ -20,6 +20,8 @@ install_misc_tools() {
 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+    install_package "Debian configuration utilities" "debconf-utils"
+
     # Software which is not included by default
     # in Ubuntu due to legal or copyright reasons.
 
@@ -65,17 +67,23 @@ install_web_servers() {
 
 install_mysql() {
 
-    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | sudo tee /etc/apt/sources.list.d/mysql.list > /dev/null
-    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-tools" | sudo tee --append /etc/apt/sources.list.d/mysql.list > /dev/null
-    update
+    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-apt-config" | sudo tee /etc/apt/sources.list.d/mysql.list > /dev/null
+    echo "deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | sudo tee --append /etc/apt/sources.list.d/mysql.list > /dev/null
+    echo "deb-src http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7" | sudo tee --append /etc/apt/sources.list.d/mysql.list > /dev/null
 
-    MYSQL_ROOT_PASSWORD="r00t"
-    echo debconf mysql-server/root_password password $MYSQL_ROOT_PASSWORD | sudo debconf-set-selections
-    echo debconf mysql-server/root_password_again password $MYSQL_ROOT_PASSWORD | sudo debconf-set-selections
+    execute \
+        "sudo apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5 && sudo apt-get update" \
+        "MySQL apt repository"
+    # update
+
+    MYSQL_ROOT_PASSWORD="secret"
+    sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/data-dir select ''"
+    sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/root-pass password $MYSQL_ROOT_PASSWORD"
+    sudo debconf-set-selections <<< "mysql-community-server mysql-community-server/re-root-pass password $MYSQL_ROOT_PASSWORD"
     install_package "MySQL" "mysql-server"
-    sudo usermod -d /var/lib/mysql/ mysql
+    sudo usermod -d /var/lib/mysql/ mysql > /dev/null
 
-    sudo sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
+    #sudo sed -i 's/127\.0\.0\.1/0\.0\.0\.0/g' /etc/mysql/my.cnf
     # mysql -uroot -p -e 'USE mysql; UPDATE `user` SET `Host`="%" WHERE `User`="root" AND `Host`="localhost"; DELETE FROM `user` WHERE `Host` != "%" AND `User`="root"; FLUSH PRIVILEGES;'
 
     # Install Expect
@@ -113,10 +121,13 @@ EOF
 
     # Run Expect script.
     # This runs the "mysql_secure_installation" script which removes insecure defaults.
-    sudo expect ~/secure_our_mysql.sh
+
+    execute \
+        "sudo expect ~/secure_our_mysql.sh" \
+        "MySQL secure installation"
 
     # Cleanup
-    rm -v ~/secure_our_mysql.sh # Remove the generated Expect script
+    rm -v ~/secure_our_mysql.sh > /dev/null # Remove the generated Expect script
     sudo apt-get -qq purge expect > /dev/null # Uninstall Expect, commented out in case you need Expect
 
 }
