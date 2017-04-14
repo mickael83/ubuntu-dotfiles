@@ -2,3 +2,6 @@
 
 [ -n "$PS1" ] \
     && . ~/.bash_profile
+
+# Fix directory and file permissions on bash on windows
+umask 022
