@@ -9,5 +9,4 @@ print_in_purple "\n • Installs\n\n"
 
 "./$(get_os)/main.sh"
 ./node-workspace.sh
-./web-servers.sh
 ./vim.sh
