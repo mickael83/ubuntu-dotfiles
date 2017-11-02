@@ -28,7 +28,9 @@ install_plugins() {
     execute \
         ". $HOME/.bash.local \
             && cd $HOME/.vim/plugins/tern_for_vim \
-            && npm install" \
+            && sudo apt-get install --allow-unauthenticated -qqy npm \
+            && npm install \
+            && sudo apt-get purge npm" \
         "Install plugins (extra installs for 'tern_for_vim')"
 
 }
