@@ -24,6 +24,21 @@ alias t="tmux"
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+alias dl="cd ~/Downloads"
+alias pp="cd /media/mickael/Data/Projects/MPinheiro"
+alias pi="cd /media/mickael/Data/Projects/IPLeiria"
+
+alias giti='git config --local user.name "Michael Pinheiro"; git config --local user.email "michael.pinheiro@ipleiria.pt"'
+alias gitp='git config --local user.name "Michael Pinheiro"; git config --local user.email "mickael.pinheiro@gmail.com"'
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 # Load OS specific aliases.
 
 . "aliases/$OS/bash_aliases"
+
+
+
+
+
